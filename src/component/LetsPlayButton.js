@@ -8,7 +8,7 @@ export default function LetsPlayButton(props) {
     <Container>
       <Row>
         <Col>
-          <button className="buttonTextStyle">Let's Play</button>
+          <button className="buttonTextStyle">Vamos a jugar</button>
         </Col>
       </Row>
     </Container>

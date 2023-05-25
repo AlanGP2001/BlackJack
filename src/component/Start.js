@@ -18,7 +18,7 @@ export default function Start(props) {
     <Container className="appBackgroundColor primaryColor center whiteSpaceUnderNav startScreenHeightBugFix">
       <Row className="whitespaceBetweenNavStartTite">
         <Col>
-          <h3>Let's Play</h3>
+          <h3>Vamos a jugar</h3>
         </Col>
       </Row>
       <Row>
@@ -44,8 +44,8 @@ export default function Start(props) {
       </Row>
       <Row>
         <Col>
-          Click the chip to increase your bet, in increments of $5, up to your
-          bank amount of ${props.money}
+          Haga clic en la ficha para aumentar su apuesta, en incrementos de $5, 
+          hasta su monto bancario de ${props.money}
         </Col>
       </Row>
       <Row>
@@ -53,7 +53,7 @@ export default function Start(props) {
           <Link to="/play">
             <PrimaryButton
               size="largeButtonSize"
-              title="Let's Play"
+              title="Vamos a jugar"
               action={props.start}
             />
           </Link>

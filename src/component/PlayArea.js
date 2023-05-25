@@ -51,16 +51,16 @@ export default function PlayArea(props) {
         >
           {props.playerTotal < 17 && (
             <ButtonChoice
-              title="Hit"
+              title="Golpear"
               action={props.hit}
-              text={"Get another card. If your new total is over 21, you lose!"}
+              text={"Consigue otra tarjeta. Si su nuevo total es superior a 21, ¡usted pierde!"}
             />
           )}
 
           <ButtonChoice
-            title="Stand"
+            title="Plantarse"
             action={props.stand}
-            text={"Click to end your turn. The dealer starts drawing cards!"}
+            text={"Haz clic para finalizar tu turno. ¡El crupier comienza a sacar cartas!"}
           />
 
           {props.playerTotal >= 17 && props.dealerCards.length <3 && props.playerCards.length === 2 && (
@@ -71,9 +71,9 @@ export default function PlayArea(props) {
 
           {props.playerTotal < 17 && (
             <ButtonChoice
-              title={"Double Down"}
+              title={"Doblar"}
               action={props.doubleDown}
-              text={"Double your bet, get one card, and the dealer turn starts!"}
+              text={"¡Doble su apuesta, obtenga una carta y comienza el turno del crupier!"}
             />
           )}
         </Col>

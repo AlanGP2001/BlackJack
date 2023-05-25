@@ -25,7 +25,7 @@ export default function Footer(props) {
   return (
     <Container fluid className="footer-background">
       <Row>
-        <Col className="center primaryColor">HIGH SCORES</Col>
+        <Col className="center primaryColor">PUNTUACIONES ALTAS</Col>
       </Row>
       {
           winners.map((player, id) => {
@@ -41,7 +41,7 @@ export default function Footer(props) {
         <Col className="center">
             <PrimaryButton
               size="largeButtonSize"
-              title="View ScoreBoard"
+              title="Ver marcador"
               action={() => setShowSaveButton(true)}
             />
         </Col>

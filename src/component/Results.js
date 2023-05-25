@@ -36,7 +36,7 @@ const saveUserToScoreboard = () => {
       {props.gameResults === "lose" && (
         <Row>
           <Col>
-            <h1>You LOSE!!!</h1>
+            <h1>¡¡¡Tú pierdes!!!</h1>
           </Col>
         </Row>
       )}
@@ -75,8 +75,7 @@ const saveUserToScoreboard = () => {
           </Row>
           <Row className="center whiteSpaceBetweenElements">
             <Col xs={12} className="instructionText">
-              Click the chip to increase your bet, in increments of $5, up to your
-              funds limit
+            en incrementos de $5, hasta su límite de fondosen incrementos de $5, hasta su límite de fondos de ${props.money}
             </Col>
           </Row>
           <Row className="whiteSpaceBetweenElements">
@@ -84,7 +83,7 @@ const saveUserToScoreboard = () => {
               <Link to="/play">
                 <PrimaryButton
                   size="largeButtonSize"
-                  title="Let's Play"
+                  title="Vamos a jugar"
                   action={props.start}
                 />
               </Link>
@@ -94,7 +93,7 @@ const saveUserToScoreboard = () => {
             <Col>
               <PrimaryButton
                 size="largeButtonSize"
-                title="Reset Bet Amount"
+                title="Restablecer cantidad de apuesta"
                 action={props.resetBet}
               />
             </Col>
@@ -103,7 +102,7 @@ const saveUserToScoreboard = () => {
             <Col>
                 <PrimaryButton
                   size="largeButtonSize"
-                  title="Save to Scoreboard"
+                  title="Guardar en el marcador"
                   action={() => setShowSaveButton(true)}
                 />
             </Col>
@@ -115,7 +114,7 @@ const saveUserToScoreboard = () => {
           <Link to="/">
             <PrimaryButton
               size="largeButtonSize"
-              title="End Game"
+              title="Fin del juego"
               action={props.playerLeave}
             />
           </Link>
@@ -131,7 +130,7 @@ const saveUserToScoreboard = () => {
           <Modal.Footer>
             <PrimaryButton
               size="largeButtonSize"
-              title="Save to Scoreboard"
+              title="Guardar en el marcador"
               action={() => saveUserToScoreboard()}
             />
           </Modal.Footer>
