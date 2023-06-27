@@ -64,7 +64,7 @@ export default function PlayArea(props) {
           />
 
           {props.playerTotal >= 17 && props.dealerCards.length <3 && props.playerCards.length === 2 && (
-            <p className="primaryColor whiteSpaceUnderNav">You must stand if your total is greater then 17.</p>
+            <p className="primaryColor whiteSpaceUnderNav">Debes plantarte si tu total es mayor a 17.</p>
           )
 
           }

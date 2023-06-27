@@ -54,4 +54,4 @@ This project was updated a year later to include backend integration with Netlif
 
 **CSS:** A formatting language for styling web pages
 
-_Updated by JC Smiley in August of 2020_
+_Updated by Alan Gallardo Peñaloza in August of 2020_

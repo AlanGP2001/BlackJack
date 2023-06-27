@@ -26,7 +26,7 @@ class App extends Component {
 
   // Alert thanking a player for playing
   endGameAlert = () => {
-    swal("Thank you for playing. Good luck next time");
+    swal("Gracias por jugar. Buena suerte la próxima vez");
     this.setState({funds:100, currentBet:5});
   }
 

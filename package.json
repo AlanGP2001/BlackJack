@@ -1,7 +1,7 @@
 {
   "name": "blackjack",
   "version": "1.0.0",
-  "author": "JC Smiley",
+  "author": "Alan Gallardo Peñaloza",
   "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",

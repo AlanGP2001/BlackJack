@@ -29,7 +29,7 @@ const saveUserToScoreboard = () => {
       {props.gameResults === "win" && (
         <Row>
           <Col>
-            <h1>YOU WON!!!</h1>
+            <h1>¡¡¡GANASTE!!!</h1>
           </Col>
         </Row>
       )}
@@ -43,7 +43,7 @@ const saveUserToScoreboard = () => {
       {props.gameResults === "push" && (
         <Row className="whiteSpaceBetweenElements">
           <Col>
-            <h1>It was a TIE</h1>
+            <h1>Fue un empate</h1>
           </Col>
         </Row>
       )}
@@ -122,7 +122,7 @@ const saveUserToScoreboard = () => {
       </Row>
       <Modal show={showSaveButton} onHide={() => setShowSaveButton(false)} className="scoreboardBackground" >
           <Modal.Header closeButton>
-            <Modal.Title>Add your name to the ScoreBoard</Modal.Title>
+            <Modal.Title>Añade tu nombre al marcador</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <input type="text" value={playerName}  onChange={e => setPlayerName(e.target.value)} />
