@@ -2,19 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Modal } from "react-bootstrap";
 import "../App.css";
 import PrimaryButton from "./PrimaryButton";
-// import kMeans from "./K-Means";
 
-// Función de k-means (por simplificar, solo se muestra cómo agrupar por valor)
+// Función para realizar el algoritmo de k-means
 function kMeans(data, k) {
+  console.log("------- data -------");
+  console.log(data);
+  console.log("------- k -------");
+  console.log(k);
+  // Creamos un arreglo de clústeres inicializado con arreglos vacíos
   const clusters = new Array(k).fill().map(() => []);
+  // Iteramos a través de cada valor en el conjunto de datos
   for (const value of data) {
+    // Calculamos el índice de clúster para el valor actual
     const clusterIndex = value % k;
+    // Verificamos si ya existe un clúster en el índice calculado
     if (clusters[clusterIndex]) {
+      // Si existe, agregamos el valor al clúster correspondiente
       clusters[clusterIndex].push(value);
     } else {
+      // Si no existe, creamos un nuevo clúster con el valor actual
       clusters[clusterIndex] = [value];
     }
   }
+  // Devolvemos un objeto que contiene los clústeres resultantes
   return { clusters };
 }
 
@@ -24,10 +34,12 @@ export default function Footer(props) {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showSaveButtonKMens, setShowSaveButtonKMens] = useState(false);
 
+  // Cargar datos iniciales
   useEffect(() => {
     displayWinners();
   }, []);
 
+  // Obtener lista de jugadores ganadores
   const displayWinners = async () => {
     const response = await fetch(`api/getNames`);
     const data = await response.json();
@@ -38,49 +50,71 @@ export default function Footer(props) {
     setWinners(topWinners);
   };
 
+  // Función para categorizar jugadores en base a sus fondos
   function categorizePlayersByFunds(funds) {
+    // Comprobamos si los fondos son menores o iguales a 500
     if (funds <= 500) {
+      // Si es así, categorizamos al jugador como "Novato"
       return "Novato";
     } else if (funds <= 5000) {
+      // Si los fondos son mayores que 500 pero menores o iguales a 5000,
+      // categorizamos al jugador como "Promedio"
       return "Promedio";
     } else {
+      // Si los fondos son mayores que 5000, categorizamos al jugador como "Experimentado"
       return "Experimentado";
     }
   }
 
+  // Aplicar algoritmo de k-means a los jugadores
   function applyKMeansToPlayers(players) {
-    const k = 3; // Número de clústeres deseados (puedes ajustarlo)
+    // Definimos el número de clústeres deseado
+    const k = 3;
+    // Extraemos los datos de los fondos de los jugadores en un arreglo
     const fundsData = players.map((player) => player.fields.funds);
+    // Aplicamos el algoritmo de k-means a los datos de fondos
     const result = kMeans(fundsData, k);
-
-    // Asignar categorías a jugadores basados en los fondos
+    // Asignamos categorías a los jugadores basadas en sus fondos
     const playersWithCategories = players.map((player) => ({
       ...player,
       category: categorizePlayersByFunds(player.fields.funds),
     }));
-
-    // Asignar clústeres a categorías usando el mapeo
+    // Asignamos información de clústeres a los jugadores
     const playersWithInfo = playersWithCategories.map((player) => ({
       ...player,
-      cluster: result.clusters.findIndex((cluster) =>
-        cluster.includes(player.fields.funds)
-      ),
+      // Verificamos la categoría del jugador y asignamos el clúster correspondiente
+      cluster:
+        categorizePlayersByFunds(player.fields.funds) === "Novato"
+          ? 0
+          : categorizePlayersByFunds(player.fields.funds) === "Promedio"
+          ? 1
+          : categorizePlayersByFunds(player.fields.funds) === "Experimentado"
+          ? 2
+          : result.clusters.findIndex((cluster) =>
+              cluster.includes(player.fields.funds)
+            ),
     }));
 
+    // Devolvemos un arreglo de jugadores con información de clústeres y categorías
     return playersWithInfo;
   }
 
   return (
     <Container fluid className="footer-background">
+      {/* Encabezado de la sección */}
       <Row>
         <Col className="center primaryColor">PUNTUACIONES ALTAS</Col>
       </Row>
+
+      {/* Mostrar lista de ganadores */}
       {winners.map((player, id) => (
         <Row key={id}>
           <Col className="center primaryColor">{player.fields.Name}</Col>
           <Col className="center primaryColor">${player.fields.funds} </Col>
         </Row>
       ))}
+
+      {/* Botones para ver la tabla */}
       <Row>
         <Col className="center">
           <PrimaryButton
@@ -98,6 +132,7 @@ export default function Footer(props) {
         </Col>
       </Row>
 
+      {/* Modal para mostrar marcador */}
       <Modal
         show={showSaveButton}
         onHide={() => setShowSaveButton(false)}
@@ -110,6 +145,7 @@ export default function Footer(props) {
               <h1>ScoreBoard</h1>
             </Col>
           </Row>
+          {/* Encabezados de columnas */}
           <Row>
             <Col className="center">
               <h4>#</h4>
@@ -121,6 +157,7 @@ export default function Footer(props) {
               <h4>Fondos</h4>
             </Col>
           </Row>
+          {/* Mostrar lista de jugadores */}
           {players.map((player, id) => {
             return (
               <Row key={id}>
@@ -130,6 +167,7 @@ export default function Footer(props) {
               </Row>
             );
           })}
+          {/* Mostrar el total de registros */}
           <Row>
             <Col className="center">
               <p>Total de registros: {players.length}</p>
@@ -138,12 +176,13 @@ export default function Footer(props) {
         </Modal.Body>
       </Modal>
 
+      {/* Modal para mostrar K-Means */}
       <Modal
         show={showSaveButtonKMens}
         onHide={() => setShowSaveButtonKMens(false)}
         className="scoreboardBackground"
-        size="lg" // Tamaño grande (lg)
-        dialogClassName="modal-lg" // Clase CSS personalizada para un tamaño grande
+        size="lg"
+        dialogClassName="modal-lg"
       >
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
@@ -152,6 +191,7 @@ export default function Footer(props) {
               <h1>K-Means</h1>
             </Col>
           </Row>
+          {/* Encabezados de columnas */}
           <Row>
             <Col className="center">
               <h4>#</h4>
@@ -169,6 +209,7 @@ export default function Footer(props) {
               <h4>Categoría</h4>
             </Col>
           </Row>
+          {/* Mostrar lista de jugadores con K-Means y categorías */}
           {applyKMeansToPlayers(players).map((player, id) => (
             <Row key={id}>
               <Col className="center">{id + 1}</Col>
@@ -178,6 +219,7 @@ export default function Footer(props) {
               <Col className="center">{player.category}</Col>
             </Row>
           ))}
+          {/* Mostrar el total de registros */}
           <Row>
             <Col className="center">
               <p>Total de registros: {players.length}</p>
