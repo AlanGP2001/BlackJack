@@ -48,30 +48,24 @@ export default function Footer(props) {
     }
   }
 
-  // Crear un objeto de mapeo de índices de cluster a categorías
-  // const categoryToClusterIndexMap = {
-  //   Novato: 0,
-  //   Promedio: 1,
-  //   Experimentado: 2,
-  // };
-
   function applyKMeansToPlayers(players) {
     const k = 3; // Número de clústeres deseados (puedes ajustarlo)
     const fundsData = players.map((player) => player.fields.funds);
     const result = kMeans(fundsData, k);
 
-    // Asignar categorías y clústeres a jugadores
-    const playersWithInfo = players.map((player) => {
-      const clusterIndex = result.clusters.findIndex((cluster) =>
+    // Asignar categorías a jugadores basados en los fondos
+    const playersWithCategories = players.map((player) => ({
+      ...player,
+      category: categorizePlayersByFunds(player.fields.funds),
+    }));
+
+    // Asignar clústeres a categorías usando el mapeo
+    const playersWithInfo = playersWithCategories.map((player) => ({
+      ...player,
+      cluster: result.clusters.findIndex((cluster) =>
         cluster.includes(player.fields.funds)
-      );
-      const category = categorizePlayersByFunds(player.fields.funds);
-      return {
-        ...player,
-        cluster: clusterIndex,
-        category: category,
-      };
-    });
+      ),
+    }));
 
     return playersWithInfo;
   }
@@ -116,14 +110,31 @@ export default function Footer(props) {
               <h1>ScoreBoard</h1>
             </Col>
           </Row>
+          <Row>
+            <Col className="center">
+              <h4>#</h4>
+            </Col>
+            <Col className="center">
+              <h4>Nombre</h4>
+            </Col>
+            <Col className="center">
+              <h4>Fondos</h4>
+            </Col>
+          </Row>
           {players.map((player, id) => {
             return (
               <Row key={id}>
+                <Col className="center">{id + 1}</Col>
                 <Col className="center">{player.fields.Name}</Col>
                 <Col className="center">${player.fields.funds} </Col>
               </Row>
             );
           })}
+          <Row>
+            <Col className="center">
+              <p>Total de registros: {players.length}</p>
+            </Col>
+          </Row>
         </Modal.Body>
       </Modal>
 
@@ -138,10 +149,13 @@ export default function Footer(props) {
         <Modal.Body>
           <Row>
             <Col className="center">
-              <h1>ScoreBoard (K-Means)</h1>
+              <h1>K-Means</h1>
             </Col>
           </Row>
           <Row>
+            <Col className="center">
+              <h4>#</h4>
+            </Col>
             <Col className="center">
               <h4>Nombre</h4>
             </Col>
@@ -157,12 +171,18 @@ export default function Footer(props) {
           </Row>
           {applyKMeansToPlayers(players).map((player, id) => (
             <Row key={id}>
+              <Col className="center">{id + 1}</Col>
               <Col className="center">{player.fields.Name}</Col>
               <Col className="center">${player.fields.funds}</Col>
               <Col className="center">{player.cluster}</Col>
               <Col className="center">{player.category}</Col>
             </Row>
           ))}
+          <Row>
+            <Col className="center">
+              <p>Total de registros: {players.length}</p>
+            </Col>
+          </Row>
         </Modal.Body>
       </Modal>
     </Container>
