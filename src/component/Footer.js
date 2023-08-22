@@ -5,10 +5,6 @@ import PrimaryButton from "./PrimaryButton";
 
 // Función para realizar el algoritmo de k-means
 function kMeans(data, k) {
-  console.log("------- data -------");
-  console.log(data);
-  console.log("------- k -------");
-  console.log(k);
   // Creamos un arreglo de clústeres inicializado con arreglos vacíos
   const clusters = new Array(k).fill().map(() => []);
   // Iteramos a través de cada valor en el conjunto de datos
@@ -83,15 +79,18 @@ export default function Footer(props) {
     const playersWithInfo = playersWithCategories.map((player) => ({
       ...player,
       // Verificamos la categoría del jugador y asignamos el clúster correspondiente
+      // Propiedad para asignar el clúster del jugador
       cluster:
-        categorizePlayersByFunds(player.fields.funds) === "Novato"
-          ? 0
-          : categorizePlayersByFunds(player.fields.funds) === "Promedio"
-          ? 1
-          : categorizePlayersByFunds(player.fields.funds) === "Experimentado"
-          ? 2
-          : result.clusters.findIndex((cluster) =>
-              cluster.includes(player.fields.funds)
+        categorizePlayersByFunds(player.fields.funds) === "Novato" // Si la categoría es "Novato"
+          ? 0 // Asignar el valor 0 al clúster
+          : categorizePlayersByFunds(player.fields.funds) === "Promedio" // Si la categoría es "Promedio"
+          ? 1 // Asignar el valor 1 al clúster
+          : categorizePlayersByFunds(player.fields.funds) === "Experimentado" // Si la categoría es "Experimentado"
+          ? 2 // Asignar el valor 2 al clúster
+          : result.clusters.findIndex(
+              (
+                cluster // Si la categoría no coincide con ninguna de las anteriores
+              ) => cluster.includes(player.fields.funds) // Encontrar el índice del clúster que contiene los fondos del jugador
             ),
     }));
 
